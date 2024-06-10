@@ -1,0 +1,111 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+}
+
+body > .main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid grey;
+}
+
+.main-container > .top-section-container {
+    display: flex;
+    height: 200px;
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.top-section-container > .display-container {
+    width: 600px;
+    height: 100%;
+    border: 1px solid grey;
+}
+
+.top-section-container > .delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    border: 1px solid grey;
+}
+
+/* bottom section */
+
+.main-container > .bottom-section-container {
+    display: flex;
+    height: 800px;
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.bottom-section-container > .bottom-left-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 100%;
+}
+
+.bottom-left-container > .secondary-operator-container {
+    display: flex;
+    justify-content: space-between;
+    height: calc(calc(100% / 5) * 1);
+    width: 100%;
+    border: 1px solid grey;
+}
+
+.secondary-operator-container > .clear-button,
+.secondary-operator-container > .percent-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 100%;
+    border: 1px solid grey;
+}
+
+.bottom-left-container > .numbers-container {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    width: 600px;
+    height: calc(calc(100% / 5) * 4);
+}
+
+.numbers-container > .number-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: calc(100% / 4);
+    border: 1px solid grey;
+}
+
+.bottom-section-container > .bottom-right-container {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 100%;
+}
+
+
+.bottom-right-container > .operator-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100% / 5);
+    border: 1px solid grey;
+}
