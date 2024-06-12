@@ -146,8 +146,13 @@ function isOperatorIncludedIn(array) {
     }
 }
 
+function isLastDigitAnOperator(array) {
+    return ["+", "-", "*", "/"].some(item => item === array[array.length -1]);
+}
+
 function addAdditionOperator() {
     if (mainOperationInput.length === 0) return;
+    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
     else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
     mainOperationInput.push("+");
     console.log("addition");
@@ -155,6 +160,7 @@ function addAdditionOperator() {
 
 function addSubtractionOperator() {
     if (mainOperationInput.length === 0) return;
+    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
     else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
     mainOperationInput.push("-");
     console.log("subtraction");
@@ -162,6 +168,7 @@ function addSubtractionOperator() {
 
 function addMultiplicationOperator() {
     if (mainOperationInput.length === 0) return;
+    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
     else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
 
     mainOperationInput.push("*");
@@ -170,6 +177,7 @@ function addMultiplicationOperator() {
 
 function addDivisionOperator() {
     if (mainOperationInput.length === 0) return;
+    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
     else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
 
     mainOperationInput.push("/");
