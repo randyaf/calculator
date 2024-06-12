@@ -132,26 +132,30 @@ function isOperatorIncludedIn(array) {
 }
 
 function addAdditionOperator() {
-    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    if (mainOperationInput.length === 0) return;
+    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
     mainOperationInput.push("+");
     console.log("addition");
 }
 
 function addSubtractionOperator() {
-    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    if (mainOperationInput.length === 0) return;
+    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
     mainOperationInput.push("-");
     console.log("subtraction");
 }
 
 function addMultiplicationOperator() {
-    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    if (mainOperationInput.length === 0) return;
+    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
 
     mainOperationInput.push("*");
     console.log("multiplication");
 }
 
 function addDivisionOperator() {
-    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    if (mainOperationInput.length === 0) return;
+    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
 
     mainOperationInput.push("/");
     console.log("division");
@@ -189,6 +193,7 @@ function evaluateOperation() {
             mainOperationInput = [...multiply(firstNumber, secondNumber).toString().split("")];
             break;
         case "/":
+            if (secondNumber === 0) return;
             mainOperationInput = [...divide(firstNumber, secondNumber).toString().split("")];
             break;
     }
