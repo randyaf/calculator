@@ -148,7 +148,8 @@ function isOperatorIncludedIn(array) {
 }
 
 function isLastDigitAnOperator(array) {
-    return ["+", "-", "*", "/"].some(item => item === array[array.length -1]);
+    // return ["+", "-", "*", "/"].some(item => item === array[array.length -1]);
+    return getOperatorIndex(array) === array.length -1;
 }
 
 function getOperator(array) {
@@ -185,35 +186,73 @@ function getOperatorIndex(array) {
 
 function addAdditionOperator() {
     if (mainOperationInput.length === 0) return;
-    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
-    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
-    mainOperationInput.push("+");
+    else if (!isOperatorIncludedIn(mainOperationInput)) {
+        mainOperationInput.push("+");
+    }
+    else if (isLastDigitAnOperator(mainOperationInput)) {
+        mainOperationInput.pop();
+        mainOperationInput.push("+");
+    }
+    else if (isOperatorIncludedIn(mainOperationInput) && !isLastDigitAnOperator(mainOperationInput)) {
+        console.log("its happening");
+        if (mainOperationInput[mainOperationInput.length -1] === "-") return;
+        evaluateOperation();
+        mainOperationInput.push("+");
+    }
     console.log("addition");
 }
 
 function addSubtractionOperator() {
     if (mainOperationInput.length === 0) return;
-    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
-    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
-    mainOperationInput.push("-");
+    else if (!isOperatorIncludedIn(mainOperationInput)) {
+        mainOperationInput.push("-");
+    }
+    else if (isLastDigitAnOperator(mainOperationInput)) {
+        mainOperationInput.pop();
+        mainOperationInput.push("-");
+    }
+    else if (isOperatorIncludedIn(mainOperationInput) && !isLastDigitAnOperator(mainOperationInput)) {
+        console.log("its happening");
+        if (mainOperationInput[mainOperationInput.length -1] === "-") return;
+        evaluateOperation();
+        mainOperationInput.push("-");
+    }
     console.log("subtraction");
 }
 
 function addMultiplicationOperator() {
     if (mainOperationInput.length === 0) return;
-    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
-    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
-
-    mainOperationInput.push("*");
+    else if (!isOperatorIncludedIn(mainOperationInput)) {
+        mainOperationInput.push("*");
+    }
+    else if (isLastDigitAnOperator(mainOperationInput)) {
+        mainOperationInput.pop();
+        mainOperationInput.push("*");
+    }
+    else if (isOperatorIncludedIn(mainOperationInput) && !isLastDigitAnOperator(mainOperationInput)) {
+        console.log("its happening");
+        if (mainOperationInput[mainOperationInput.length -1] === "-") return;
+        evaluateOperation();
+        mainOperationInput.push("*");
+    }
     console.log("multiplication");
 }
 
 function addDivisionOperator() {
     if (mainOperationInput.length === 0) return;
-    else if (isLastDigitAnOperator(mainOperationInput)) mainOperationInput.pop();
-    else if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
-
-    mainOperationInput.push("/");
+    else if (!isOperatorIncludedIn(mainOperationInput)) {
+        mainOperationInput.push("/");
+    }
+    else if (isLastDigitAnOperator(mainOperationInput)) {
+        mainOperationInput.pop();
+        mainOperationInput.push("/");
+    }
+    else if (isOperatorIncludedIn(mainOperationInput) && !isLastDigitAnOperator(mainOperationInput)) {
+        console.log("its happening");
+        if (mainOperationInput[mainOperationInput.length -1] === "-") return;
+        evaluateOperation();
+        mainOperationInput.push("/");
+    }
     console.log("division");
 }
 
