@@ -86,12 +86,7 @@ function inputBeforeOperator(number) {
 }
 
 function inputAfterOperator(number) {
-    const operatorIndex = mainOperationInput.findIndex(item => {
-                        return (item === "+" ||
-                                item === "-" ||
-                                item === "*" ||
-                                item === "/");
-                    });
+    const operatorIndex = getOperatorIndex(mainOperationInput);
     const rightHandNumber = [...mainOperationInput].slice(operatorIndex+1);
 
     console.log("operator-index: " + operatorIndex);
@@ -114,7 +109,10 @@ function inputAfterOperator(number) {
             mainOperationInput.push(number);
         }
         console.log("after if 3")
-    } else if (number !== "."){
+    } else if (rightHandNumber.length === 2 && rightHandNumber[0] === "-" && rightHandNumber[1] === "0"){
+        mainOperationInput.pop();
+        mainOperationInput.push(number);
+    }else if (number !== "."){
         mainOperationInput.push(number);
         console.log("after if 4");
     }
