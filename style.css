@@ -28,9 +28,17 @@ body > .main-container {
 }
 
 .top-section-container > .display-container {
+    display: flex;
+    align-items: center;
     width: 600px;
     height: 100%;
+    padding: 10px;
     border: 1px solid grey;
+}
+
+.display-container > .calculation-display {
+    font-size: 32px;
+    font-weight: 800;
 }
 
 .top-section-container > .delete-button {

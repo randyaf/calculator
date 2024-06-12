@@ -30,7 +30,7 @@ const secondaryOperatorContainer = document.querySelector(".secondary-operator-c
 secondaryOperatorContainer.addEventListener("click", processSecondaryOperator);
 
 const deleteButton = document.querySelector(".delete-button");
-deleteButton.addEventListener("click", deleteDisplay);
+deleteButton.addEventListener("click", deleteLastDigit);
 
 function processNumber(event) {
     inputNumber(event);
@@ -52,6 +52,7 @@ function inputNumber(event) {
         } else {
             inputBeforeOperator(number);
         }
+        updateDisplay();
     }
 
     console.log(mainOperationInput);
@@ -125,6 +126,7 @@ function processOperator(event) {
     else if (operatorValue === "*") addMultiplicationOperator();
     else if (operatorValue === "/") addDivisionOperator();
     else if (operatorValue === "=") evaluateOperation();
+    updateDisplay();
 }
 
 function isOperatorIncludedIn(array) {
@@ -197,6 +199,7 @@ function evaluateOperation() {
             mainOperationInput = [...divide(firstNumber, secondNumber).toString().split("")];
             break;
     }
+    updateDisplay();
     console.log("evaluation");
     console.log(mainOperationInput);
 }
@@ -205,6 +208,13 @@ function processSecondaryOperator(event) {
 
 }
 
-function deleteDisplay(event) {
+function updateDisplay() {
+    const calculationDisplay = document.querySelector(".calculation-display");
+    calculationDisplay.textContent = mainOperationInput.join("");
+}
 
+function deleteLastDigit() {
+    if (mainOperationInput.length === 0) return;
+    mainOperationInput.pop();
+    updateDisplay();
 }
