@@ -130,7 +130,20 @@ function processOperator(event) {
 }
 
 function isOperatorIncludedIn(array) {
-    return array.some(item => item === "+" || item === "-" || item === "*" || item === "/");
+    const listOfOperator = array.filter(item => {
+        return (item === "+" ||
+                item === "-" ||
+                item === "*" ||
+                item === "/");
+    });
+
+    if (listOfOperator.length > 1 && listOfOperator[0] === "-") {
+        return true;
+    } else if (listOfOperator.length === 1 && array[0] !== "-") {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function addAdditionOperator() {
@@ -166,18 +179,22 @@ function addDivisionOperator() {
 function evaluateOperation() {
     if (!isOperatorIncludedIn(mainOperationInput)) return;
 
-    const operator = mainOperationInput.find(item => {
+    let operator;
+    let operatorIndex;
+    let listOfOperator = mainOperationInput.filter(item => {
         return (item === "+" ||
                 item === "-" ||
                 item === "*" ||
                 item === "/")
     });
-    const operatorIndex = mainOperationInput.findIndex(item => {
-        return (item === "+" ||
-                item === "-" ||
-                item === "*" ||
-                item === "/")
-    });
+
+    if (listOfOperator.length > 1) {
+        operator = listOfOperator[1];
+        operatorIndex = mainOperationInput.slice(1).findIndex(item => item === operator) + 1;
+    } else {
+        operator = listOfOperator[0];
+        operatorIndex = mainOperationInput.findIndex(item => item === operator);
+    }
 
     const firstNumber = parseFloat(mainOperationInput.slice(0, operatorIndex).join(""));
     const secondNumber = parseFloat(mainOperationInput.slice(operatorIndex+1).join(""));
