@@ -1,7 +1,3 @@
-let firstNumber = 0;
-let secondNumber = 0;
-let operatorQueue = "";
-let lastDigitInput = "";
 let mainOperationInput = [];
 
 // basic operation
@@ -124,33 +120,80 @@ function processOperator(event) {
     const operator = event.target.matches(".operator-button") ? event.target : null;
     const operatorValue = operator.getAttribute("data-value");
 
-    if (operatorValue === "+") addAdditionOperator(event);
-    else if (operatorValue === "-") addSubtractionOperator(event);
-    else if (operatorValue === "*") addMultiplicationOperator(event);
-    else if (operatorValue === "/") addDivisionOperator(event);
-    else if (operatorValue === "=") evaluateOperation(event);
+    if (operatorValue === "+") addAdditionOperator();
+    else if (operatorValue === "-") addSubtractionOperator();
+    else if (operatorValue === "*") addMultiplicationOperator();
+    else if (operatorValue === "/") addDivisionOperator();
+    else if (operatorValue === "=") evaluateOperation();
 }
 
-function addAdditionOperator(event) {
-    operatorQueue = "+";
-    mainOperationInput.push(operatorQueue);
+function isOperatorIncludedIn(array) {
+    return array.some(item => item === "+" || item === "-" || item === "*" || item === "/");
+}
+
+function addAdditionOperator() {
+    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    mainOperationInput.push("+");
     console.log("addition");
 }
 
-function addSubtractionOperator(event) {
+function addSubtractionOperator() {
+    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+    mainOperationInput.push("-");
     console.log("subtraction");
 }
 
-function addMultiplicationOperator(event) {
+function addMultiplicationOperator() {
+    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+
+    mainOperationInput.push("*");
     console.log("multiplication");
 }
 
-function addDivisionOperator(event) {
+function addDivisionOperator() {
+    if (isOperatorIncludedIn(mainOperationInput)) evaluateOperation();
+
+    mainOperationInput.push("/");
     console.log("division");
 }
 
-function evaluateOperation(event) {
+function evaluateOperation() {
+    if (!isOperatorIncludedIn(mainOperationInput)) return;
+
+    const operator = mainOperationInput.find(item => {
+        return (item === "+" ||
+                item === "-" ||
+                item === "*" ||
+                item === "/")
+    });
+    const operatorIndex = mainOperationInput.findIndex(item => {
+        return (item === "+" ||
+                item === "-" ||
+                item === "*" ||
+                item === "/")
+    });
+
+    const firstNumber = parseFloat(mainOperationInput.slice(0, operatorIndex).join(""));
+    const secondNumber = parseFloat(mainOperationInput.slice(operatorIndex+1).join(""));
+    console.log("first: " + firstNumber);
+    console.log("second: " + secondNumber);
+
+    switch(operator) {
+        case "+":
+            mainOperationInput = [...add(firstNumber, secondNumber).toString().split("")];
+            break;
+        case "-":
+            mainOperationInput = [...subtract(firstNumber, secondNumber).toString().split("")];
+            break;
+        case "*":
+            mainOperationInput = [...multiply(firstNumber, secondNumber).toString().split("")];
+            break;
+        case "/":
+            mainOperationInput = [...divide(firstNumber, secondNumber).toString().split("")];
+            break;
+    }
     console.log("evaluation");
+    console.log(mainOperationInput);
 }
 
 function processSecondaryOperator(event) {
