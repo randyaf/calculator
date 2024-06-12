@@ -32,6 +32,9 @@ secondaryOperatorContainer.addEventListener("click", processSecondaryOperator);
 const deleteButton = document.querySelector(".delete-button");
 deleteButton.addEventListener("click", deleteLastDigit);
 
+const toggleNegativeButton = document.querySelector(".negative-toggle-button");
+toggleNegativeButton.addEventListener("click", toggleNegative);
+
 function processNumber(event) {
     inputNumber(event);
 
@@ -137,7 +140,7 @@ function isOperatorIncludedIn(array) {
                 item === "/");
     });
 
-    if (listOfOperator.length > 1 && listOfOperator[0] === "-") {
+    if (listOfOperator.length > 1 ) {
         return true;
     } else if (listOfOperator.length === 1 && array[0] !== "-") {
         return true;
@@ -149,6 +152,38 @@ function isOperatorIncludedIn(array) {
 function isLastDigitAnOperator(array) {
     return ["+", "-", "*", "/"].some(item => item === array[array.length -1]);
 }
+
+function getOperator(array) {
+    let listOfOperator = array.filter(item => {
+            return (item === "+" ||
+                    item === "-" ||
+                    item === "*" ||
+                    item === "/")
+        });
+
+    if (listOfOperator.length > 1) {
+        if (array[0] !== "-") return listOfOperator[0];
+        return listOfOperator[1];
+    } else {
+        return listOfOperator[0];
+    }
+}
+
+function getOperatorIndex(array) {
+    let listOfOperator = array.filter(item => {
+            return (item === "+" ||
+                    item === "-" ||
+                    item === "*" ||
+                    item === "/")
+        });
+
+    if (listOfOperator.length > 1) {
+        return array.slice(1).findIndex(item => item === getOperator(array)) + 1;
+    } else {
+        return array.findIndex(item => item === getOperator(array));
+    }
+}
+
 
 function addAdditionOperator() {
     if (mainOperationInput.length === 0) return;
@@ -186,23 +221,10 @@ function addDivisionOperator() {
 
 function evaluateOperation() {
     if (!isOperatorIncludedIn(mainOperationInput)) return;
+    else if (isLastDigitAnOperator(mainOperationInput)) return;
 
-    let operator;
-    let operatorIndex;
-    let listOfOperator = mainOperationInput.filter(item => {
-        return (item === "+" ||
-                item === "-" ||
-                item === "*" ||
-                item === "/")
-    });
-
-    if (listOfOperator.length > 1) {
-        operator = listOfOperator[1];
-        operatorIndex = mainOperationInput.slice(1).findIndex(item => item === operator) + 1;
-    } else {
-        operator = listOfOperator[0];
-        operatorIndex = mainOperationInput.findIndex(item => item === operator);
-    }
+    const operator = getOperator(mainOperationInput);
+    const operatorIndex = getOperatorIndex(mainOperationInput);
 
     const firstNumber = parseFloat(mainOperationInput.slice(0, operatorIndex).join(""));
     const secondNumber = parseFloat(mainOperationInput.slice(operatorIndex+1).join(""));
@@ -215,6 +237,7 @@ function evaluateOperation() {
             break;
         case "-":
             mainOperationInput = [...subtract(firstNumber, secondNumber).toString().split("")];
+            console.log("subtract");
             break;
         case "*":
             mainOperationInput = [...multiply(firstNumber, secondNumber).toString().split("")];
@@ -225,8 +248,24 @@ function evaluateOperation() {
             break;
     }
     updateDisplay();
-    console.log("evaluation");
     console.log(mainOperationInput);
+}
+
+function toggleNegative() {
+    if (!isOperatorIncludedIn(mainOperationInput)) {
+        if (mainOperationInput[0] === "-") mainOperationInput.shift();
+        else mainOperationInput.unshift("-");
+    } else if (isOperatorIncludedIn(mainOperationInput)) {
+        const operatorIndex = getOperatorIndex(mainOperationInput);
+
+        if(mainOperationInput[operatorIndex + 1] === "-") {
+            mainOperationInput.splice(operatorIndex+1, 1);
+        } else {
+            mainOperationInput.splice(operatorIndex+1, 0, "-");
+        }
+    }
+    updateDisplay();
+    console.log("toggle negative");
 }
 
 function processSecondaryOperator(event) {
