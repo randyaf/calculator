@@ -306,7 +306,35 @@ function toggleNegative() {
 }
 
 function processSecondaryOperator(event) {
+    if (event.target.matches(".clear-button")) clearDisplay();
+    else if (event.target.matches(".percent-button")) addPercent();
+}
 
+function clearDisplay() {
+    mainOperationInput = [];
+    updateDisplay();
+}
+
+function addPercent() {
+    if (!isOperatorIncludedIn(mainOperationInput)) {
+        if (mainOperationInput.length === 1 && mainOperationInput[0] === "-" || mainOperationInput.length === 0) return;
+
+        addDivisionOperator();
+        mainOperationInput.push("100");
+        evaluateOperation();
+
+    } else if (isOperatorIncludedIn(mainOperationInput)) {
+        const operatorIndex = getOperatorIndex(mainOperationInput);
+
+        if(mainOperationInput.length === operatorIndex + 2 && mainOperationInput[operatorIndex+1] === "-"
+            || isLastDigitAnOperator(mainOperationInput)) {
+            return;
+        }
+        const number = parseInt(mainOperationInput.slice(operatorIndex+1).join(""));
+        mainOperationInput.splice(operatorIndex+1, mainOperationInput.length-1, ...(number / 100).toString().split(""))
+    }
+    updateDisplay();
+    console.log("toggle negative");
 }
 
 function updateDisplay() {
